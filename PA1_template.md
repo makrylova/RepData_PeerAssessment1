@@ -12,41 +12,24 @@ This assignment makes use of data from a personal activity monitoring device. Th
 
 ```r
 activity<-read.csv("activity.csv")
-```
-
-```
-## Warning in file(file, "rt"): cannot open file 'activity.csv': No such file
-## or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
-```
-
-```r
 str(activity)
 ```
 
 ```
-## Error in str(activity): object 'activity' not found
+## 'data.frame':	17568 obs. of  3 variables:
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ date    : Factor w/ 61 levels "2012-10-01","2012-10-02",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
 ```
 
 ```r
 activity["date"]<-as.Date(activity$date,"%Y-%m-%d")
-```
-
-```
-## Error in as.Date(activity$date, "%Y-%m-%d"): object 'activity' not found
 ```
 ##What is mean total number of steps taken per day?
 Calculating the total number of steps taken per day
 
 ```r
 total_steps<-aggregate(steps~date, data = activity, sum, na.rm=TRUE)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity' not found
 ```
 Histogram of the total number of steps taken each day
 
@@ -55,9 +38,7 @@ hist(total_steps$steps, xlab="Number of Steps", ylab = "Number of Days",
 main = "Steps per Day")
 ```
 
-```
-## Error in hist(total_steps$steps, xlab = "Number of Steps", ylab = "Number of Days", : object 'total_steps' not found
-```
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 
 
@@ -70,7 +51,7 @@ mean(total_steps$steps)
 ```
 
 ```
-## Error in mean(total_steps$steps): object 'total_steps' not found
+## [1] 10766.19
 ```
 
 ```r
@@ -78,7 +59,7 @@ median(total_steps$steps)
 ```
 
 ```
-## Error in median(total_steps$steps): object 'total_steps' not found
+## [1] 10765
 ```
 
 ##What is the average daily activity pattern?
@@ -86,18 +67,13 @@ A time series plot of the 5-minute interval and the average number of steps take
 
 ```r
 average_steps<-aggregate(steps~interval, data = activity, mean)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity' not found
-```
-
-```r
 str(average_steps)
 ```
 
 ```
-## Error in str(average_steps): object 'average_steps' not found
+## 'data.frame':	288 obs. of  2 variables:
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ steps   : num  1.717 0.3396 0.1321 0.1509 0.0755 ...
 ```
 
 ```r
@@ -105,9 +81,7 @@ plot(average_steps$interval, average_steps$steps,type="l", xlab="Interval",
 ylab = "Daily Average", main = "Average Number of Steps by Interval")
 ```
 
-```
-## Error in plot(average_steps$interval, average_steps$steps, type = "l", : object 'average_steps' not found
-```
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 
 
@@ -118,7 +92,7 @@ average_steps[which.max(average_steps$steps),"interval"]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'average_steps' not found
+## [1] 835
 ```
 
 ##Imputing missing values
@@ -129,7 +103,7 @@ sum(is.na(activity))
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'activity' not found
+## [1] 2304
 ```
 
 We are going to substitute missing values by average for that interval
@@ -138,28 +112,15 @@ We are going to substitute missing values by average for that interval
 activity_fixed<-transform(activity, steps = ifelse(is.na(activity$steps),
 average_steps$steps, activity$steps))
 ```
-
-```
-## Error in transform(activity, steps = ifelse(is.na(activity$steps), average_steps$steps, : object 'activity' not found
-```
 Histogram of the total number of steps taken each day 
 
 ```r
 total_steps_fixed<-aggregate(steps~date, data = activity_fixed, sum, na.rm=TRUE)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity_fixed' not found
-```
-
-```r
 hist(total_steps_fixed$steps, xlab="Number of Steps", ylab = "Number of Days",
 main = "Steps per Day")
 ```
 
-```
-## Error in hist(total_steps_fixed$steps, xlab = "Number of Steps", ylab = "Number of Days", : object 'total_steps_fixed' not found
-```
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
 
 
 The mean total number of steps taken per day is:
@@ -169,7 +130,7 @@ mean(total_steps_fixed$steps)
 ```
 
 ```
-## Error in mean(total_steps_fixed$steps): object 'total_steps_fixed' not found
+## [1] 10766.19
 ```
 The median total number of steps taken per day is:
 
@@ -178,7 +139,7 @@ median(total_steps_fixed$steps)
 ```
 
 ```
-## Error in median(total_steps_fixed$steps): object 'total_steps_fixed' not found
+## [1] 10766.19
 ```
 Notice, the mean stays the same and the median increases after imputing missing values. Also, there was a significant increase in the number of days that fall into 10K-15K steps range (around the mean)
 
@@ -187,38 +148,18 @@ Creating a new variable that indicates weekday/weekend
 
 ```r
 activity_fixed$day<-weekdays(activity_fixed$date)
-```
-
-```
-## Error in weekdays(activity_fixed$date): object 'activity_fixed' not found
-```
-
-```r
 activity_fixed$weekend<- ifelse(activity_fixed$day=="Saturday" |
 activity_fixed$day=="Sunday",  "weekend", "weekday")
-```
-
-```
-## Error in ifelse(activity_fixed$day == "Saturday" | activity_fixed$day == : object 'activity_fixed' not found
 ```
 Time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days
 
 ```r
 g<-aggregate(steps~interval + weekend, data = activity_fixed, mean)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'activity_fixed' not found
-```
-
-```r
 library("lattice")
 xyplot(steps ~ interval | weekend, g, type = "l")
 ```
 
-```
-## Error in eval(substitute(groups), data, environment(x)): object 'g' not found
-```
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
 
 
 
