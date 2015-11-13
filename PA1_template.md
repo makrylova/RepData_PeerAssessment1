@@ -38,7 +38,7 @@ hist(total_steps$steps, xlab="Number of Steps", ylab = "Number of Days",
 main = "Steps per Day")
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+![plot of chunk plot1](figure/plot1-1.png) 
 
 
 
@@ -81,7 +81,7 @@ plot(average_steps$interval, average_steps$steps,type="l", xlab="Interval",
 ylab = "Daily Average", main = "Average Number of Steps by Interval")
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![plot of chunk plot2](figure/plot2-1.png) 
 
 
 
@@ -116,11 +116,14 @@ Histogram of the total number of steps taken each day
 
 ```r
 total_steps_fixed<-aggregate(steps~date, data = activity_fixed, sum, na.rm=TRUE)
+```
+
+```r
 hist(total_steps_fixed$steps, xlab="Number of Steps", ylab = "Number of Days",
 main = "Steps per Day")
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
+![plot of chunk plot3](figure/plot3-1.png) 
 
 
 The mean total number of steps taken per day is:
@@ -156,10 +159,13 @@ Time series plot of the 5-minute interval and the average number of steps taken,
 ```r
 g<-aggregate(steps~interval + weekend, data = activity_fixed, mean)
 library("lattice")
+```
+
+```r
 xyplot(steps ~ interval | weekend, g, type = "l")
 ```
 
-![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
+![plot of chunk plot4](figure/plot4-1.png) 
 
 
 

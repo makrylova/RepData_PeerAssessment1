@@ -20,7 +20,7 @@ Calculating the total number of steps taken per day
 total_steps<-aggregate(steps~date, data = activity, sum, na.rm=TRUE)
 ```
 Histogram of the total number of steps taken each day
-```{r, echo=TRUE}
+```{r plot1, echo=TRUE }
 hist(total_steps$steps, xlab="Number of Steps", ylab = "Number of Days",
 main = "Steps per Day")
 ```
@@ -40,6 +40,8 @@ A time series plot of the 5-minute interval and the average number of steps take
 ```{r, echo=TRUE}
 average_steps<-aggregate(steps~interval, data = activity, mean)
 str(average_steps)
+```
+```{r plot2, echo=TRUE }
 plot(average_steps$interval, average_steps$steps,type="l", xlab="Interval",
 ylab = "Daily Average", main = "Average Number of Steps by Interval")
 ```
@@ -65,6 +67,8 @@ average_steps$steps, activity$steps))
 Histogram of the total number of steps taken each day 
 ```{r, echo=TRUE}
 total_steps_fixed<-aggregate(steps~date, data = activity_fixed, sum, na.rm=TRUE)
+```
+```{r plot3, echo=TRUE}
 hist(total_steps_fixed$steps, xlab="Number of Steps", ylab = "Number of Days",
 main = "Steps per Day")
 ```
@@ -91,6 +95,8 @@ Time series plot of the 5-minute interval and the average number of steps taken,
 ```{r, echo=TRUE}
 g<-aggregate(steps~interval + weekend, data = activity_fixed, mean)
 library("lattice")
+```
+```{r plot4, echo=TRUE}
 xyplot(steps ~ interval | weekend, g, type = "l")
 ```
 
